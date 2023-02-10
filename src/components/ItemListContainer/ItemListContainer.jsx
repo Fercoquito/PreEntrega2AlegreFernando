@@ -1,48 +1,45 @@
 import React, { useState, useEffect } from "react";
-import getItems from"../../services/mockAsyncService"
+
+import getItems, { getItemsByCategory } from"../../services/mockAsyncService";
+import item from "../item/Item";
 import ItemList from "../itemList/ItemList";
 
- /*function ItemListContainer() {
-  const [toggle, setToggle] = useState(false);
-  const [otroToggle, setOtroToggle] = useState(false);
-
-  console.log("%cRenderizando ItemListContainer...", "background-color: blue");
-
-  useEffect(() => {
-    console.log(
-      "%cObteniendo items de la base de datos",
-      "background-color: green"
-    );
-  }, []);
-
-  useEffect(() => {
-    console.log("%cEffecto deependiente de Toggle", "background-color: orange");
-  }, [toggle]);
-*/
-
-
-  function ItemListContainer() {
+function ItemListContainer() {
     const [products, setProducts] = useState([]);
 
-    console.log("Renderizamos el componenete ..");
+  let idcategory = undefined;
 
-    useEffect( () => {
-      getItems().then((respuesta) => {
-        console.log(respuesta)
-        setProducts(respuesta)
+  
 
+  async function getProducts() {
+    if (!idcategory) {
+      
+        let response = await getItems();
+        setProducts(response);
+      
+    } else {
+      let response = await getItemsByCategory(idcategory);
+      setProducts(response);
+    }
+  }
 
-    });
-  }, [])
+  useEffect(() => {
+    getProducts();
+  }, [idcategory]);
 
   return (
+    
+    
     <>
-       <ItemList products={products}  />
+    <div> 
+       
+       
+     
+    <ItemList products={products} />
+  
+    </div>
     </>
   );
 }
 
 export default ItemListContainer;
-
- /* <button onClick={() => setToggle(!toggle)}>Toggle State</button>
-      <button onClick={() => setOtroToggle(!toggle)}>Otro Toggle</button>*/

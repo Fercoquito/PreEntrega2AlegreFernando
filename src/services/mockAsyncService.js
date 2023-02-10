@@ -161,31 +161,44 @@ const databaseItems = [
         "price": 118.67,
         "detail": "6397929813104435"
     }, 
-    {
-        "id": 19,
-        "title": "Olipique Marsella",
-        "category": "Camperas",
-        "stock": 28,
-        "imgurl": "../assets/img/short/06.jpg",
-        "price": 136.31,
-        "detail": "3573243394224304"
-    }, 
- 
+    
 ];
 
 
-function getItems() {
+export default function getItems() {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve(databaseItems);
-      }, 2000);
+      }, 1);
     });
   }
-  export function getSingleItem() {
-    return new Promise((resolve) => {
+
+  
+  
+
+
+  export function getSingleItem(itemid) {
+    let itemReq = databaseItems.find((item) => {        
+        return item.id === parseInt(itemid);
+    })
+
+    return new Promise((resolve, reject) => {
       setTimeout(() => {
-        resolve(databaseItems[0]);
-      }, 2000);
+        if (itemReq !== undefined) resolve(itemReq);
+        else reject("Item no encontrado en la base de datos.");
+      }, 200);
     });
+
   }
-  export default getItems;
+
+    export function getItemsByCategory(categoryid) {
+    let itemsCat = databaseItems.filter( (item) => item.category === categoryid )
+
+    return new Promise((resolve,) => {
+      setTimeout(() => {
+      resolve(itemsCat);
+      }, 200);
+    });
+
+  }
+  

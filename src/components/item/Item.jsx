@@ -2,10 +2,12 @@ import React, { useState } from "react";
 
 import "./Item.css";
 
-import { ButtonChild } from "../Buttom/Buttom";
+import { ButtonChild } from "../Button/Button";
 import ToggleButton from "../toggleButton/ToggleButton";
+import { Link } from "react-router-dom";
 
-function Item({ title, price, detail, imgurl }) {
+function Item({ id, title, price, detail, imgurl }) {
+  const urlDetail =  `/item/${id} `
   return (
     <div className="item-card">
       <ToggleButton icon="*" />
@@ -18,7 +20,9 @@ function Item({ title, price, detail, imgurl }) {
       <div className="item-card_detail">
         <h4>$ {price}</h4>
         <p>{detail}</p>
+        <Link to={urlDetail}>
         <ButtonChild>Ver detalle</ButtonChild>
+        </Link>
       </div>
     </div>
   );
